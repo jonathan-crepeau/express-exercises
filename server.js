@@ -16,19 +16,22 @@ const path = require('path');
 //     next();
 // });
 
-app.use(express.static('views'));
-app.use(express.static(__dirname + '/public'));
+// NOTE - Including an additional app.us(express.static('views')) automatically serves index.html (first file in views) at the root path without a specific GET Request path specified below:
+app.use(express.static('public'));
 
 // SECTION Routes
 // NOTE HTTP GET Request for root path:
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'index.html'))
+  res.sendFile(path.join(__dirname + '/views/index.html'));
 })
 
 // NOTE HTTP GET Request for /api/albums path:
 app.get('/api/albums', (req, res) => {
     res.json(albums);
 })
+
+// NOTE HTTP GET Request for /api/taquerias path:
+app.get('/api/taquerias', (req, res) => res.json(taquerias));
 
 // NOTE Start Server on Port
 app.listen(port, () => console.log(`App listening at ${port}`))
@@ -49,4 +52,10 @@ const albums = [
       title: 'Fake History',
       artist: 'letlive.'
     }
+  ];
+
+  const taquerias = [
+    { name: "La Taqueria" },
+    { name: "El Farolito" },
+    { name: "Taqueria Cancun" }
   ];

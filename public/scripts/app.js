@@ -6,13 +6,19 @@ $(document).ready(function() {
     url: 'http://localhost:3000/api/albums',
     dataType: 'json',
     success: (response) => {
-        // printResponse(response);
         appendAlbums(response);
     },
     error: (error) => {
         printError(error);
     }
-  });
+    });
+        $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/api/taquerias',
+        dataType: 'json',
+        success: (response) => prependTaquerias(response),
+        error: (err) => console.error(err)
+    })
 })
 
 function appendAlbums(response) {
@@ -23,6 +29,16 @@ function appendAlbums(response) {
         $(singleAlbum).append(albumTitle)
         $(singleAlbum).append(artistName);
         $('#albums-container').append(singleAlbum)
+    }
+}
+
+function prependTaquerias(response) {
+    for (let i = 0; i < response.length; i++) {
+        console.log(response[i].name)
+        console.log(i)
+
+        const taqueria = $(`<p class="taqueria">${response[i].name}</p>`)
+        $('.album').prepend(taqueria);
     }
 }
 
