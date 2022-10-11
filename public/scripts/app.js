@@ -1,7 +1,7 @@
 console.log('Fear is the mind killer.');
 
-$(document).ready(function() {
-    $.ajax({
+$(document).ready(async function() {
+    await $.ajax({
     method: 'GET',
     url: 'http://localhost:3000/api/albums',
     dataType: 'json',
@@ -12,7 +12,7 @@ $(document).ready(function() {
         printError(error);
     }
     });
-        $.ajax({
+       await $.ajax({
         method: 'GET',
         url: 'http://localhost:3000/api/taquerias',
         dataType: 'json',
@@ -34,11 +34,8 @@ function appendAlbums(response) {
 
 function prependTaquerias(response) {
     for (let i = 0; i < response.length; i++) {
-        console.log(response[i].name)
-        console.log(i)
-
         const taqueria = $(`<p class="taqueria">${response[i].name}</p>`)
-        $('.album').prepend(taqueria);
+        $(`.album:nth-child(${i + 1})`).prepend(taqueria);
     }
 }
 
